@@ -66,18 +66,36 @@ class TestBooksCollector:
     
 
     '''Проверка вывода книги определенного жанра'''
-    def test_get_books_with_specific_genre_success(self, collection_five_books):
-        assert collection_five_books.get_books_with_specific_genre('Ужасы') == ['Чужой']
+    def test_get_books_with_specific_genre_success():
+        collector = BooksCollector()
+        collector.add_new_book('Чужой')
+        collector.set_book_genre('Чужой', 'Ужасы')
+        assert collector.get_books_with_specific_genre('Ужасы') == ['Чужой']
+
 
     '''Негативная проверка вывода отсутствующей книги определенного жанра'''
-    def test_get_books_with_specific_genre_missing_book(self, collection_five_books):
-        assert len(collection_five_books.get_books_with_specific_genre('Приключения')) == 0
+    def test_get_books_with_specific_genre_missing_book():
+        collector = BooksCollector()
+        collector.add_new_book('Чужой')
+        collector.set_book_genre('Чужой', 'Ужасы')
+        assert len(collector.get_books_with_specific_genre('Приключения')) == 0
 
 
     '''Проверка вывода списка книг с жанром для детей'''
-    def test_get_books_for_children_success(self, collection_five_books):
-        children_books = collection_five_books.get_books_for_children()
-        assert len(children_books) == 3 and children_books == ['Властелин колец', 'Король лев', 'Сон в летнюю ночь']
+    def test_get_books_for_children_success():
+        collector = BooksCollector()
+        collector.add_new_book('Властелин колец')
+        collector.set_book_genre('Властелин колец', 'Фэнтези')
+        collector.add_new_book('Король лев')
+        collector.set_book_genre('Король лев', 'Мультфильмы')
+        collector.add_new_book('Сон в летнюю ночь')
+        collector.set_book_genre('Сон в летнюю ночь', 'Сказки')
+        collector.add_new_book('Чужой')
+        collector.set_book_genre('Чужой', 'Ужасы')
+    
+        children_books = collector.get_books_for_children()
+        assert len(children_books) == 3
+        assert children_books == ['Властелин колец', 'Король лев', 'Сон в летнюю ночь']
 
 
     '''Проверка добавления книги из списка books_genre в избранное'''
