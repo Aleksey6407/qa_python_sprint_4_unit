@@ -117,3 +117,20 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.favorites = ["Книга1", "Книга2"]
         assert collector.get_list_of_favorites_books() == ["Книга1", "Книга2"]
+
+    def test_get_books_genre():
+        collector = BooksCollector()
+        # Наполняем словарь напрямую, потому что тестируем только get_books_genre()
+        test_dict = {
+            "Книга1": "Фантастика",
+            "Книга2": "Ужасы",
+            "Книга3": ""
+        }
+        collector.books_genre = test_dict.copy()
+        # Проверяем, что метод возвращает точно такой же словарь
+        assert collector.get_books_genre() == test_dict
+
+    def test_get_books_genre_empty():
+        collector = BooksCollector()
+        # Изначально словарь пуст
+        assert collector.get_books_genre() == {}
